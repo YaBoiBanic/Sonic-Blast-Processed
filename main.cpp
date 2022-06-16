@@ -118,6 +118,7 @@ int main() {
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
       gameOver = true;
+      break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -131,7 +132,7 @@ int main() {
     getline(cin, emptyString);
     printf("\033c");
     enemy second;
-    second.name = "Buzz Bomber";
+    second.name = "BuzzBomber";
     second.attack = 15;
     second.maxHP = 150;
     second.currentHP = 150;
@@ -146,6 +147,7 @@ int main() {
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
       gameOver = true;
+      break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -185,7 +187,12 @@ int main() {
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
       gameOver = true;
+      break;
     }
+    cout << "Sonic adjusted to the digital landscape. His attack and HP were increased.\n";
+    sonic.attack+=5;
+    sonic.currentHP+=25;
+    sonic.maxHP+=25;
     cout << endl << "Press any button to continue" << endl;
     getline(cin, emptyString);
     printf("\033c");
@@ -228,6 +235,7 @@ int main() {
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
       gameOver = true;
+      break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -265,6 +273,7 @@ int main() {
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
       gameOver = true;
+      break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -302,6 +311,7 @@ int main() {
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
       gameOver = true;
+      break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -334,6 +344,7 @@ int main() {
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
       gameOver = true;
+      break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -342,11 +353,11 @@ int main() {
     getline(cin, emptyString);
     printf("\033c");
   cout << "Sonic: Ow, my head! Again!" << endl << endl << "Sonic took a quick glance at his surroundings. He was back in the same lab area in Scrap Brain Zone he was consumed by the Error Trapper in. Sonic looked behind him, and just as he had thought, he was greeted by a demolished Error Trapper. Alongside it, Metal Sonic laid on the ground, smoking from his jet engine." << endl << endl << "Sonic: Looks like everything worked out in the end. There's just one thing missing, and that's the Chaos Emeralds back where they belong. It doesn't matter how long or far you trap me, you'll never be faster than me!" << endl << endl << "Sonic peeled out from the lab and went to take down Eggman, thus finishing his daily routine. The End." << endl << endl << "THANK YOU FOR PLAYING";
-    gameOver = true;
-  } while (gameOver == false);
+  } while (false);
   if (eggmanProgress > 6) {
-    cout << endl << "Eggman has collected all 7 Chaos Emeralds before Sonic could escape the Error Trapper. The Eggman Empire shall reign supreme..." << endl << "GAME OVER";
+    cout << endl << "Eggman has collected all 7 Chaos Emeralds before Sonic could escape the Error Trapper. The Eggman Empire shall reign supreme..." << endl << "GAME OVER\n";
   }
+  if(gameOver) cout << "Game Over.\n";
   
 }
 
@@ -364,6 +375,9 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
     a.attack = a.attack+15;
   } else if(c.chaobuffs[3]) {
     b.attack = b.attack-10;
+  } else if(c.chaobuffs[1]) {
+    a.currentHP+=50;
+    a.maxHP+=50;
   }
 
   while(turnLoop && eggmanProgress < 7) {
@@ -461,7 +475,7 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
       int enemchoice;
       bool enemflag = true;
       while(enemflag) {
-        int randnum = random()%17;
+        int randnum = random()%16;
         if(b.enemskills[randnum]) {
           enemflag = false;
           enemchoice = randnum;
@@ -508,12 +522,12 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
         cout << "The " + b.name + " plants a Hive Bomb on Sonic, setting a bomb that will do 50 damage in " << hiveBomb_timer-1 << " turns.\n";
       }
       if(enemchoice == 6) {
-        cout << "The " + b.name + " piledrivers Sonic, doing 75 damage.\n";
-        a.currentHP = a.currentHP-75;
+        cout << "The " + b.name + " piledrivers Sonic, doing 40 damage.\n";
+        a.currentHP = a.currentHP-40;
       }
       if(enemchoice == 7) {
-        for(int i = 0; i < 5; i++) {
-          int randnum = random()%11+10;
+        for(int i = 0; i < 4; i++) {
+          int randnum = random()%7+5;
           cout << "The " + b.name + " barrages Sonic, doing " << randnum << " damage.\n";
           a.currentHP = a.currentHP-randnum;
         }
@@ -534,11 +548,11 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
         cout << "Metal Sonic kicks the Sonic for " << b.attack << " damage.\n";
         a.currentHP = a.currentHP - b.attack;
       }
-      if(choice == 11) {
+      if(enemchoice == 11) {
         cout << "Metal Sonic homing attacks Sonic for " << b.attack+10 << " damage.\n";
         a.currentHP = a.currentHP - (b.attack+10);
       }
-      if(choice == 12) {
+      if(enemchoice == 12) {
         int randnum = random()%3;
         double multiplier;
         if(randnum == 0) multiplier = 1.2;
@@ -547,18 +561,18 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
         cout << "Metal Sonic spin dashes Sonic for " << round(b.attack*multiplier) << " damage.\n";
         a.currentHP = a.currentHP - round(b.attack*multiplier);
       }
-      if(choice == 13) {
+      if(enemchoice == 13) {
         cout << "Metal Sonic gathers energy from Sonic and unleashes a Light Speed Attack for " << b.attack+(a.attack/4) << " damage.\n";
         a.currentHP = a.currentHP - (b.attack+(a.attack/4));
       }
-      if(choice == 14) {
+      if(enemchoice == 14) {
         for(int i = 0; i < 3; i++) {
           int randnum = random()%6+5;
           cout << "Metal Sonic uses Sonic Wind on Sonic for " << b.attack+randnum << " damage.\n" << endl;
           a.currentHP = a.currentHP - (b.attack+randnum);
         }
       }
-      if(choice == 15) {
+      if(enemchoice == 15) {
         cout << "Metal Sonic uses Cyloop, creating a ring around Sonic for " << b.attack*4 << " damage.\n" << endl;
         a.currentHP = a.currentHP - (b.attack*4);
       }
@@ -580,7 +594,7 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
     if(turn_count%20 == 0) eggmanProgress++;
     
     if(a.currentHP <= 0) {
-      cout << endl << "\"I-I can't let my friends down... No...\"" << endl << endl << "Sonic has fallen." << endl << endl << "GAME OVER";
+      cout << endl << "\"I-I can't let my friends down... No...\"" << endl << endl << "Sonic has fallen." << endl;
       gameOver = true;
       break;
     }
@@ -589,7 +603,7 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
       turnLoop = false;
     }
 
-    if(c.chaobuffs[2]) {
+    if(c.chaobuffs[2] && !isStunned) {
       cout << c.name + " healed Sonic for 5 HP.\n" << endl;
       a.currentHP = a.currentHP + 5;
       if(a.currentHP > a.maxHP) a.currentHP = a.maxHP;
@@ -599,6 +613,12 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
       gameOver = true;
       a.currentHP = 0;
     }
+  }
+  if(c.chaobuffs[0]) {
+    a.attack = a.attack-15;
+  } else if(c.chaobuffs[1]) {
+    a.currentHP = a.currentHP-50;
+    a.maxHP = a.maxHP-50;
   }
   return battle_turns;
 }
@@ -610,7 +630,7 @@ void downtime (Sonic &snoc, vector<Chao> &chaoset, vector<bool> &skillset) {
     cout << "HP: " << snoc.currentHP << "/" << snoc.maxHP << "\t\tAttack: " << snoc.attack << "\nExp: " << exps << endl;
     cout << "What would you like to do?\n\n";
     cout << "0. Check Eggman's Progress\n";
-    cout << "1. Rest (Restore HP) (Adds 10 turns)\n";
+    cout << "1. Rest (Restore HP) (Adds 10 turns) (Starts next battle)\n";
     cout << "2. Use Chao Station\n";
     cout << "3. Improve your skills\n";
     cout << "4. Continue\n";
@@ -635,7 +655,7 @@ void downtime (Sonic &snoc, vector<Chao> &chaoset, vector<bool> &skillset) {
       continue;
     }
     if (choice == 1) {
-      cout << "Sonic lied down on the integer covered \"grass\". To his surprise, it felt just like normal grass. Sonic closed his eyes for a bit.\n" << endl;
+      cout << "Sonic lied down on the integer covered ground. To his surprise, it was quite warm. Sonic closed his eyes for a bit.\n" << endl;
       snoc.currentHP = snoc.maxHP;
       for(int i = 0; i < 10; i++) {
         turn_count++;
@@ -646,11 +666,12 @@ void downtime (Sonic &snoc, vector<Chao> &chaoset, vector<bool> &skillset) {
         }
       }
       cout << "Sonic's HP was restored.\n\n";
+      rest = false;
       cout << "Press any button to continue";
       string emptyString;
       getline(cin, emptyString);
       printf("\033c");
-      rest = false;
+      continue;
     }
     if (choice == 2) {
       chaostation(chaoset);
@@ -675,35 +696,48 @@ void chaostation(vector<Chao> &chaoset) {
     for(int i = 0; i < chaoset.size(); i++) {
       if(chaoset[i].chaobuffs[randnum]) chaoflag = true;
     }
+    if(chaoset.size() >= 6) {
+      chaoflag = false;
+      cout << "Would you like to check your Chao inventory? (y/n)" << endl;
+      string resp;
+      getline(cin, resp);
+      if(resp == "y" || resp == "Y") {
+        chaocheck(chaoset);
+        return;
+      } else {
+        cout << "You exit the Chao Station." << endl;
+        return;
+      }
+    }
   }
 
   adoptable.chaobuffs[randnum] = true;
 
-  cout << "Would you like to purchase a Chao for 200 exp? (y/n)\n" << endl;
+  cout << "Would you like to purchase a Chao for 200 exp? (y/n)" << endl;
   string resp;
   getline(cin, resp);
   if(resp == "y" || resp == "Y") {
     if(exps >= 200) {
-      cout << "You successfully purchase a Chao. What do you name it?\n" << endl;
+      cout << "You successfully purchase a Chao. What do you name it?" << endl;
       getline(cin, resp);
       adoptable.name = resp;
       chaoset.push_back(adoptable);
-      cout << "You decide to name the Chao " + adoptable.name + ". It will now be able to grant you its power.\n" << endl;
+      cout << "You decide to name the Chao " + adoptable.name + ". It will now be able to grant you its power." << endl;
       exps = exps - 200;
     } else {
-      cout << "You do not have enough exp to purchase a Chao.\n" << endl;
+      cout << "You do not have enough exp to purchase a Chao." << endl;
     }
   } else {
-    cout << "You decided not to purchase a Chao.\n" << endl;
+    cout << "You decided not to purchase a Chao." << endl;
   }
 
   if(chaoset.size() > 0) {
-    cout << "Would you like to check your Chao inventory? (y/n)\n" << endl;
+    cout << "Would you like to check your Chao inventory? (y/n)" << endl;
     getline(cin, resp);
     if(resp == "y" || resp == "Y") {
       chaocheck(chaoset);
     } else {
-      cout << "You exit the Chao Station.\n" << endl;
+      cout << "You exit the Chao Station." << endl;
     }
   }
 }
@@ -722,7 +756,7 @@ void chaocheck(vector<Chao> &chaoset) {
     chaoset[i].index = i;
   }
 
-  cout << "Which Chao would you like to set as active?\n" << endl;
+  cout << "Which Chao would you like to set as active?" << endl;
   
   bool errorflag = true;
   int choice;
@@ -734,11 +768,11 @@ void chaocheck(vector<Chao> &chaoset) {
       if(choice > 0 && choice <= chaoset.size()) {
         errorflag = false;
       }
-      else cout << "Invalid choice, please try again.\n" << endl;
+      else cout << "Invalid choice, please try again." << endl;
     } catch(invalid_argument) {
-      cout << "Invalid choice, please try again.\n" << endl;
+      cout << "Invalid choice, please try again." << endl;
     } catch(out_of_range) {
-      cout << "Invalid choice, please try again.\n" << endl;
+      cout << "Invalid choice, please try again." << endl;
     }
   }
 
@@ -747,8 +781,6 @@ void chaocheck(vector<Chao> &chaoset) {
   Chao temp = chaoset[choice];
   chaoset[choice] = chaoset[0];
   chaoset[0] = temp;
-
-  
 }
 
 int binarySearch(vector<Chao> arr , int l, int r, int x)
@@ -795,6 +827,7 @@ void BubbleSort(vector<Chao> &chaoset) {
 
 void buyskills(vector<bool> &skillset, Sonic &a) {
   cout << "Attack: " << a.attack << endl;
+  cout << "HP: " << a.currentHP << "/" << a.maxHP << endl;
   cout << "Current skills:\n" << endl;
   cout << "1. Kick: a single strike that does damage equal to Sonic's attack.\n" << endl;
   if(skillset[0]) cout << "2. Homing Attack: a single strike that does damage equal to Sonic's attack + 10.\n" << endl;
@@ -805,18 +838,19 @@ void buyskills(vector<bool> &skillset, Sonic &a) {
 
   cout << "Available Skills:\n" << endl;
   cout << "1. Increase Attack by 5.\t\t75 exp.\n" << endl;
+  cout << "2. Increase maximum HP by 10\t100 exp.\n" << endl;
   if(!skillset[0]) {
-    cout << "2. Homing Attack: 100 exp.\n" << endl;
+    cout << "3. Homing Attack: 100 exp.\n" << endl;
   } else if(!skillset[1]) {
-    cout << "2. Spin Attack: 150 exp.\n" << endl;
+    cout << "3. Spin Attack: 150 exp.\n" << endl;
   } else if(!skillset[2]) {
-    cout << "2. Light Speed Attack: 200 exp.\n" << endl;
+    cout << "3. Light Speed Attack: 200 exp.\n" << endl;
   } else if(!skillset[3]) {
-    cout << "2. Sonic Wind: 250 exp.\n" << endl;
+    cout << "3. Sonic Wind: 250 exp.\n" << endl;
   } else if(!skillset[4]) {
-    cout << "2. Cyloop: 300 exp.\n" << endl;
+    cout << "3. Cyloop: 300 exp.\n" << endl;
   }
-  cout << "3. Leave Shop.\n";
+  cout << "4. Leave Shop.\n";
 
   bool errorflag = true;
   int choice;
@@ -825,7 +859,7 @@ void buyskills(vector<bool> &skillset, Sonic &a) {
     getline(cin, ans);
     try {
       choice = stoi(ans);
-      if(choice == 1 || (choice == 2 && !skillset[4]) || choice == 3) {
+      if(choice == 1 || (choice == 3 && !skillset[4]) || choice == 4 || choice == 2) {
         errorflag = false;
       }
       else cout << "Invalid choice, please try again.\n";
@@ -843,7 +877,7 @@ void buyskills(vector<bool> &skillset, Sonic &a) {
       cout << "Sonic's attack was increased.\n";
     } else cout << "You do not have enough exp to purchase this.\n";
   }
-  if(choice == 2) {
+  if(choice == 3) {
     if(!skillset[0]) {
       if(exps >= 100) {
         cout << "You can now perform Homing Attack.\n" << endl;
@@ -875,6 +909,13 @@ void buyskills(vector<bool> &skillset, Sonic &a) {
         skillset[4] = true;
       } else cout << "You do not have enough exp to purchase this.\n" << endl;
     }
+  } else if(choice == 2) {
+    if(exps >= 100) {
+      cout << "Sonic's max HP was increased by 10.";
+      exps-=100;
+      a.currentHP+=10;
+      a.maxHP+=10;
+    } else cout << "You do not have enough exp to purchase this.\n" << endl;
   }
 }
 
