@@ -71,7 +71,6 @@ void buyskills(vector<bool> &skillset, Sonic &a);
 void calcexp(int tc, int base, vector<Chao> &chaoset);
 int turn_count = 0;
 int eggmanProgress = 0;
-bool gameOver = false;
 int exps = 0;
 
 int main() {
@@ -109,7 +108,6 @@ int main() {
     first.currentHP = 100;
     first.enemskills[0] = true;
     first.enemskills[1] = true;
-    first.enemskills[2] = true;
     if(chaoset.size() > 0) {
       calcexp(start_battle(sonic, first, skillset, chaoset[0]), 100, chaoset);
     } else {
@@ -117,7 +115,6 @@ int main() {
       calcexp(start_battle(sonic, first, skillset, cybershell), 100, chaoset);
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
-      gameOver = true;
       break;
     }
     cout << endl << "Press any button to continue";
@@ -127,6 +124,9 @@ int main() {
     getline(cin, emptyString);
     printf("\033c");
     downtime(sonic, chaoset, skillset);
+    if(sonic.currentHP <= 0 || eggmanProgress > 6) {
+      break;
+    }
     printf("\033c");
     cout << "Sonic: There's gotta be a way out of here, I know there is! I don't care how many bots I have to clobber, I won't let Eggman get his way!" << endl << endl << "Sonic sensed something behind him. He stopped and turned. Nothing was there. Suddenly a projectile was hurdling towards him from above. Sonic rolled out of the way. He looked upwards to see another enemy, this time a Buzz Bomber made of code, just like the Motobug from earlier." << endl << endl << "Sonic (Thinking): There's gotta be something that creating these enemies. If I can find that, I can destroy it and set myself free from the inside." << endl << endl << "Sonic: Alright, time for round 2. Let's rock!" << endl << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -146,7 +146,6 @@ int main() {
       calcexp(start_battle(sonic, second, skillset, cybershell), 150, chaoset);
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
-      gameOver = true;
       break;
     }
     cout << endl << "Press any button to continue";
@@ -156,6 +155,9 @@ int main() {
     getline(cin, emptyString);
     printf("\033c");
     downtime(sonic, chaoset, skillset);
+    if(sonic.currentHP <= 0 || eggmanProgress > 6) {
+      break;
+    }
     printf("\033c");
     cout << "Sonic glided across the terrain, taking in his surroundings." << endl << endl << "Sonic: Looks like Eggman has a knack for level design. Granted, I think I realized that back when I first visited Star Light Zone." << endl << endl << "Sonic sprinted towards what seemed to be a power plant, with the roof of the complex open and releasing a green energy. As Sonic stopped at its entrance, another enemy began to materialize in front of Sonic." << endl << endl << "Sonic: What are you, some gatekeeper? Well you won't be stopping me. Let's dance, nuts and bolts!" << endl << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -186,7 +188,6 @@ int main() {
       calcexp(start_battle(sonic, third, skillset, cybershell), 200, chaoset);
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
-      gameOver = true;
       break;
     }
     cout << "Sonic adjusted to the digital landscape. His attack and HP were increased.\n";
@@ -200,6 +201,9 @@ int main() {
     getline(cin, emptyString);
     printf("\033c");
     downtime(sonic, chaoset, skillset);
+    if(sonic.currentHP <= 0 || eggmanProgress > 6) {
+      break;
+    }
     printf("\033c");
       cout << "Sonic boosted through all the obstacles in his path, getting closer to what seemed to be the reactor's core. Suddenly 3 doors closed in the distance. Another enemy began to materialize." << endl << endl << "Sonic: Aw, a gauntlet for little ol' me? Really rolling out the red carpet here, guys." << endl << endl << "Press any button to continue" << endl;
     getline(cin, emptyString);
@@ -234,13 +238,15 @@ int main() {
       calcexp(start_battle(sonic, fourth, skillset, cybershell), 300, chaoset);
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
-      gameOver = true;
       break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
     printf("\033c");
     downtime(sonic, chaoset, skillset);
+    if(sonic.currentHP <= 0 || eggmanProgress > 6) {
+      break;
+    }
     printf("\033c");
     int randnum3 = random()%1;
     enemy fifth;
@@ -272,13 +278,15 @@ int main() {
       calcexp(start_battle(sonic, fifth, skillset, cybershell), 400, chaoset);
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
-      gameOver = true;
       break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
     printf("\033c");
     downtime(sonic, chaoset, skillset);
+    if(sonic.currentHP <= 0 || eggmanProgress > 6) {
+      break;
+    }
     printf("\033c");
     int randnum4 = random()%1;
     enemy sixth;
@@ -310,13 +318,15 @@ int main() {
       calcexp(start_battle(sonic, sixth, skillset, cybershell), 500, chaoset);
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
-      gameOver = true;
       break;
     }
     cout << endl << "Press any button to continue";
     getline(cin, emptyString);
     printf("\033c");
     downtime(sonic, chaoset, skillset);
+    if(sonic.currentHP <= 0 || eggmanProgress > 6) {
+      break;
+    }
     printf("\033c");
     cout << "Sonic: And so, our hero triumphs over The Three Stooges blocking his path, and makes his way to slay the dragon." << endl << endl << "Sonic paced towards the reactor core's control panel. As Sonic touched the panel, the reactor began to freak out. It started bursting with energy and suddenly concentrated to materialize another enemy. However, this enemy was no ordinary foe. Sonic, recognizing the shape forming before his eyes, frowned and got into a battle stance. The Badnik fell to the ground, and slowly looked up to Sonic. The enemy was none other than..." << endl << endl << "Press any button to continue";
     getline(cin, emptyString);
@@ -343,7 +353,6 @@ int main() {
       calcexp(start_battle(sonic, metal, skillset, cybershell), 500, chaoset);
     }
     if(sonic.currentHP <= 0 || eggmanProgress > 6) {
-      gameOver = true;
       break;
     }
     cout << endl << "Press any button to continue";
@@ -357,8 +366,6 @@ int main() {
   if (eggmanProgress > 6) {
     cout << endl << "Eggman has collected all 7 Chaos Emeralds before Sonic could escape the Error Trapper. The Eggman Empire shall reign supreme..." << endl << "GAME OVER\n";
   }
-  if(gameOver) cout << "Game Over.\n";
-  
 }
 
 int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
@@ -594,8 +601,7 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
     if(turn_count%20 == 0) eggmanProgress++;
     
     if(a.currentHP <= 0) {
-      cout << endl << "\"I-I can't let my friends down... No...\"" << endl << endl << "Sonic has fallen." << endl;
-      gameOver = true;
+      cout << endl << "\"I-I can't let my friends down... No...\"" << endl << endl << "Sonic has fallen." << endl << "GAME OVER";
       break;
     }
     if(b.currentHP <= 0 && a.currentHP > 0) {
@@ -610,7 +616,6 @@ int start_battle(Sonic &a, enemy b, vector<bool> skillset, Chao c) {
     }
 
     if(eggmanProgress > 6) {
-      gameOver = true;
       a.currentHP = 0;
     }
   }
@@ -662,7 +667,8 @@ void downtime (Sonic &snoc, vector<Chao> &chaoset, vector<bool> &skillset) {
         if(turn_count%20 == 0) eggmanProgress++;
         if (eggmanProgress > 6) {
           cout << "However, this rest was short-lived, as Sonic checked Eggman's progress to see he had gotten all 7 Chaos Emeralds." << endl << "\"Maybe I shouldn't have gotten too comfortable...\"" << endl << "GAME OVER";
-          gameOver = true;
+  
+          return;
         }
       }
       cout << "Sonic's HP was restored.\n\n";
